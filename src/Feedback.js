@@ -22,12 +22,33 @@ const Feedback = () => {
     uploadPhotosButtonText
   } = values;
 
-  const handleChange = () => {
-    console.log('handle change');
+  const handleChange = (name) => (event) => {
+    setValues({
+      ...values,
+      [name]: event.target.value
+    });
   };
 
-  const handleSubmit = () => {
-    console.log('handle');
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    setValues({
+      ...values,
+      buttonText: 'Sending...'
+    });
+
+    // send data to backend
+    console.table({name, email, phone, message, uploadedFiles});
+
+    setValues({
+      name: '',
+      email: '',
+      message: '',
+      phone: '',
+      uploadedFiles: [],
+      buttonText: 'Send',
+      uploadPhotosButtonText: 'Upload files'
+    });
   };
 
   const feedbackForm = () => {
@@ -73,7 +94,6 @@ const Feedback = () => {
           <button className="col-12 mt-2 btn btn-primary btn-block">{buttonText}</button>                  
         </form>
       </React.Fragment>
-
     );
   };
 
