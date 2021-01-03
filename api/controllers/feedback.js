@@ -19,7 +19,7 @@ exports.emailFeedback = (req, res) => {
       <h4>Email: ${phone}</h4>
       <h4>Message: ${message}</h4>
       <br/>
-      ${uploadedFiles.map((file) => {
+      ${uploadedFiles && uploadedFiles.map((file) => {
         return `<img src="${file.secure_url}" alt="${file.original_filename}" style="width: 50%; overflow: hidden; padding: 50px;"/>`
       })}
       <hr/>
@@ -36,11 +36,14 @@ exports.emailFeedback = (req, res) => {
     });
   })
   .catch((err) => {
-    console.error('error sending email', err.toString());
+    const {message, code, response} = err;
+    const errorMsg = response.body.errors[0].message;
     
-    return res.status(400).json({
+    let data = `${message}: ${errorMsg}`;
+
+    return res.status(code).json({
       success: false,
-      data: err.toString()
+      data: data
     });
   });
 };

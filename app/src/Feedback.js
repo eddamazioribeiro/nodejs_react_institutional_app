@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Feedback = () => {
   const [values, setValues] = useState({
@@ -51,20 +53,38 @@ const Feedback = () => {
       data: {name, email, phone, message, uploadedFiles}
     })
     .then((res) => {
-      console.log(res);
+      if (res.data.success) {
+        toast.success('Message sent. Thanks for your contact!');
+        
+        setValues({
+          name: '',
+          email: '',
+          message: '',
+          phone: '',
+          uploadedFiles: [],
+          buttonText: 'Send',
+          uploadPhotosButtonText: 'Upload files'
+        });
+      } else {
+        toast.error(`${res.data}. Please, verify and try again`);
+
+        setValues({
+          buttonText: 'Send',
+          uploadPhotosButtonText: 'Upload files'
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error.response.data.data);
+
+      // message exposed just for testing / studying purposes
+      if (error.response.data.data) toast.error(`${error.response.data.data}. Please, try again`);
+      else toast.error('Sorry, an error ocurred. Please, try again');      
 
       setValues({
-        name: '',
-        email: '',
-        message: '',
-        phone: '',
-        uploadedFiles: [],
         buttonText: 'Send',
         uploadPhotosButtonText: 'Upload files'
-      });
-    })
-    .catch((err) => {
-      console.error('feedback submit error', err);
+      })
     });
   };
 
@@ -137,6 +157,7 @@ const Feedback = () => {
 
   return(
     <div className="p-5">
+      <ToastContainer/>
       <h3>Feedback</h3>
       <hr/>
       {feedbackForm()}
