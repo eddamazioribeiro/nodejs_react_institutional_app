@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 
 const Feedback = () => {
   const [values, setValues] = useState({
@@ -44,8 +45,17 @@ const Feedback = () => {
       buttonText: 'Sending...'
     });
 
-    // send data to backend
-    console.table({name, email, phone, message, uploadedFiles});
+    axios({
+      method: 'POST',
+      url: `${REACT_APP_API}/feedback`,
+      data: {name, email, phone, message, uploadedFiles}
+    })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.error('feedback submit error', err);
+    });
 
     setValues({
       name: '',

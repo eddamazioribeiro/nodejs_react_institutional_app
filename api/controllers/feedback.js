@@ -1,6 +1,10 @@
 
+const sendgridMail = require('@sendgrid/mail');
+
+const sendgridAPIKey = process.env.SENDGRID_API_KEY;
+
+sendgridMail.setApiKey(sendgridAPIKey);
+
 exports.emailFeedback = (req, res) => {
-  res.json({
-    data: 'API is working'
-  });
+  console.log(req.body);
 };

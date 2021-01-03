@@ -3,6 +3,6 @@ const router = express.Router();
 
 const {emailFeedback} = require('../controllers/feedback');
 
-router.get('/', emailFeedback);
+router.post('/feedback', emailFeedback);
 
 module.exports = router;
