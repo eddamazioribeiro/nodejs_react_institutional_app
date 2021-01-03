@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
+import Layout from './Layout';
 
 const Feedback = () => {
   const [values, setValues] = useState({
@@ -105,7 +106,7 @@ const Feedback = () => {
   const feedbackForm = () => {
     return(
       <React.Fragment>
-        <div className="form-group pt-5">
+        <div className="form-group">
           <button
             className="col-12 btn btn-outline-secondary btn-block p-5"
             onClick={() => {uploadWidget()}}>
@@ -113,7 +114,7 @@ const Feedback = () => {
           </button>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="form-group p-2">
             <label className="text-muted">Description</label>
             <textarea
               type="text"
@@ -122,7 +123,7 @@ const Feedback = () => {
               onChange={handleChange('message')}
               value={message}></textarea>
           </div>
-          <div className='form-group'>
+          <div className="form-group p-2">
             <label className="text-muted">Name</label>
             <input className="form-control"
               type="text"
@@ -131,7 +132,7 @@ const Feedback = () => {
               value={name}>
             </input>
           </div>
-          <div className='form-group'>
+          <div className="form-group p-2">
             <label className="text-muted">Email</label>
             <input className="form-control"
               type="text"
@@ -140,7 +141,7 @@ const Feedback = () => {
               value={email}>
             </input>
           </div>
-          <div className='form-group'>
+          <div className="form-group p-2">
             <label className="text-muted">Phone</label>
             <input className="form-control"
               type="number"
@@ -150,18 +151,22 @@ const Feedback = () => {
             </input>
           </div>
           <button className="col-12 mt-2 btn btn-primary btn-block">{buttonText}</button>                  
-        </form>
+        </form>     
       </React.Fragment>
     );
   };
 
   return(
-    <div className="p-5">
+    <Layout>
       <ToastContainer/>
-      <h3>Feedback</h3>
-      <hr/>
-      {feedbackForm()}
-    </div>
+      <div className="containter text-center">
+        <h1 className="pt-5">Feedback</h1>
+        <hr/>
+      </div>
+      <div className="container col-md-8 offset-md-2">
+        {feedbackForm()}
+      </div>
+    </Layout>
   );
 };
 
