@@ -52,19 +52,19 @@ const Feedback = () => {
     })
     .then((res) => {
       console.log(res);
+
+      setValues({
+        name: '',
+        email: '',
+        message: '',
+        phone: '',
+        uploadedFiles: [],
+        buttonText: 'Send',
+        uploadPhotosButtonText: 'Upload files'
+      });
     })
     .catch((err) => {
       console.error('feedback submit error', err);
-    });
-
-    setValues({
-      name: '',
-      email: '',
-      message: '',
-      phone: '',
-      uploadedFiles: [],
-      buttonText: 'Send',
-      uploadPhotosButtonText: 'Upload files'
     });
   };
 
