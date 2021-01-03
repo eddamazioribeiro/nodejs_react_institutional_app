@@ -22,6 +22,13 @@ const Feedback = () => {
     uploadPhotosButtonText
   } = values;
 
+  // destructuring env vars
+  const {
+    REACT_APP_API,
+    REACT_APP_CLOUDINARY_CLOUD_NAME,
+    REACT_APP_CLOUDINARY_UPLOAD_PRESET
+  } = process.env;
+
   const handleChange = (name) => (event) => {
     setValues({
       ...values,
@@ -51,9 +58,30 @@ const Feedback = () => {
     });
   };
 
+  const uploadWidget = () => {
+    window.cloudinary.openUploadWidget({
+      cloud_name: REACT_APP_CLOUDINARY_CLOUD_NAME,
+      upload_preset: REACT_APP_CLOUDINARY_UPLOAD_PRESET,
+      tags: ['ebooks']
+    }, function(error, result) {
+      setValues({
+        ...values,
+        uploadedFiles: result,
+        uploadPhotosButtonText: `${(result ? result.length : 'No')} Photo(s) uploaded`
+      });
+    });
+  };
+
   const feedbackForm = () => {
     return(
       <React.Fragment>
+        <div className="form-group pt-5">
+          <button
+            className="col-12 btn btn-outline-secondary btn-block p-5"
+            onClick={() => {uploadWidget()}}>
+            {uploadPhotosButtonText}
+          </button>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="text-muted">Description</label>
